@@ -1,130 +1,183 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import { Award, HeartHandshake, Sparkles, Timer } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
-import SectionReveal from "@/components/SectionReveal";
-import CtaButton from "@/components/CtaButton";
-import { MessageCircle } from "lucide-react";
-import { getWhatsAppUrl } from "@/lib/data";
+import PageHero from "@/components/PageHero";
+import CtaFinal from "@/components/CtaFinal";
+import Foto from "@/components/Foto";
+import SplitText from "@/components/SplitText";
+import ScrollText from "@/components/ScrollText";
+import Aurora from "@/components/Aurora";
+import { Reveal } from "@/components/SectionReveal";
+import { foto } from "@/lib/images";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/escola" },
   title: "A Escola",
-  description:
-    "Conheça a história, a filosofia e o espaço do Evelyn Studio de Dança em Franca, SP.",
+  description: "Conheça a história, a filosofia e o espaço do Evelyn Studio de Dança em Franca, SP.",
 };
 
+const rad = foto("filosofia/03-rad-logo.webp", "Logo da Royal Academy of Dance");
+
+const espaco = [
+  { img: foto("filosofia/09.jpg", "Sala de aula iluminada com espelhos e barras"), classe: "md:col-span-2 md:row-span-2" },
+  { img: foto("filosofia/04-944ba277-5da3-4029-b9a4-da9f62aeb853.jpg", "Fachada do Evelyn Studio de Dança"), classe: "" },
+  { img: foto("filosofia/01.jpg", "Recepção do estúdio com bancos e plantas"), classe: "" },
+  { img: foto("filosofia/06.jpg", "Área de convivência com mesas e painel colorido"), classe: "md:col-span-2" },
+  { img: foto("filosofia/07.jpg", "Pátio coberto com deck de madeira"), classe: "" },
+  { img: foto("filosofia/10-f6e71dc2-79af-4727-a9a8-2df43fe45693.jpg", "Sala de aula com espelhos e piso de dança"), classe: "" },
+];
+
+const filosofia = [
+  {
+    icone: Sparkles,
+    cor: "var(--magenta)",
+    titulo: "Técnica com sensibilidade",
+    texto:
+      "Acreditamos que a técnica é o alicerce, mas a sensibilidade é o que transforma movimento em arte. Cada aula equilibra rigor e expressão.",
+  },
+  {
+    icone: Timer,
+    cor: "var(--laranja)",
+    titulo: "Respeito ao tempo de cada um",
+    texto:
+      "Cada aluno tem seu ritmo. Nossas turmas são organizadas por nível e faixa etária para garantir que todos evoluam com segurança e prazer.",
+  },
+  {
+    icone: HeartHandshake,
+    cor: "var(--violeta)",
+    titulo: "Dança como formação",
+    texto:
+      "Mais do que passos, ensinamos disciplina, trabalho em equipe, autoconfiança e expressão emocional. A dança forma pessoas inteiras.",
+  },
+];
+
 export default function EscolaPage() {
+  const capa = foto("filosofia/02-img-9115.jpg", "Professora de ballet ajustando a postura de uma aluna na barra");
+
   return (
     <PageLayout>
-      {/* Hero */}
-      <section className="bg-bastidor section-padding pt-24 md:pt-32">
-        <div className="container-narrow text-center">
-          <h1 className="heading-1 text-profundidade mb-4">A Escola</h1>
-          <p className="text-muted text-lg max-w-xl mx-auto">
-            Um espaço criado para transformar vidas através da dança
-          </p>
+      <PageHero
+        eyebrow="A Escola"
+        titulo={["Um palco", { texto: "para crescer.", className: "serif-accent text-gradient" }]}
+        descricao="Um espaço criado para transformar vidas através da dança — com técnica, acolhimento e muita alegria."
+        lateral={
+          <div className="relative mx-auto aspect-[4/3.4] w-full max-w-xl">
+            <div className="rounded-[2.5rem] absolute inset-0 overflow-hidden shadow-[0_30px_60px_-35px_rgba(27,10,42,.35)]">
+              <Image src={capa.src} alt={capa.alt} fill preload sizes="(min-width:1024px) 45vw, 90vw" className="object-cover" />
+            </div>
+            <div className="glass absolute -bottom-6 left-4 flex max-w-xs items-center gap-4 rounded-3xl p-4 md:-left-8">
+              <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-white">
+                <Image src={rad.src} alt={rad.alt} width={rad.width} height={rad.height} className="h-6 w-auto" />
+              </span>
+              <p className="text-sm leading-snug text-tinta/80">
+                Formação pela <strong className="text-tinta">Royal Academy of Dance</strong>, Grade 8 com nota máxima.
+              </p>
+            </div>
+          </div>
+        }
+      />
+
+      {/* História */}
+      <section className="section">
+        <div className="shell grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <p className="eyebrow text-magenta-texto">Nossa história</p>
+            <Reveal className="mt-8 hidden lg:block">
+              <div className="glass rounded-[2rem] p-7">
+                <Award className="text-violeta" size={28} />
+                <p className="mt-4 text-nevoa leading-relaxed">
+                  Evelyn realizou os exames da Royal Academy of Dance entre 1994 e 1998, concluindo o Grade 8 com
+                  nota máxima.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+          <div className="lg:col-span-8">
+            <ScrollText
+              className="display display-sm leading-[1.12] text-tinta"
+              texto="O Evelyn Studio de Dança nasceu do sonho de democratizar o acesso à dança em Franca e região. Há mais de uma década, o estúdio forma bailarinos, artistas e pessoas que descobriram na dança uma forma de expressão e transformação pessoal."
+            />
+            <Reveal className="mt-8">
+              <p className="max-w-2xl text-lg leading-relaxed text-nevoa">
+                Desde o primeiro dia, o compromisso é o mesmo: oferecer ensino de qualidade em um ambiente acolhedor,
+                onde cada aluno é visto como único e sua evolução é celebrada a cada passo.
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* Historia */}
-      <SectionReveal className="section-padding">
-        <div className="container-narrow grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="heading-2 text-profundidade mb-4">Nossa história</h2>
-            <p className="text-muted leading-relaxed mb-4">
-              O Evelyn Studio de Dança nasceu do sonho de democratizar o acesso
-              à dança em Franca e região. Há mais de uma década, o estúdio
-              forma bailarinos, artistas e pessoas que descobriram na dança uma
-              forma de expressão e transformação pessoal.
-            </p>
-            <p className="text-muted leading-relaxed">
-              Desde o primeiro dia, o compromisso é o mesmo: oferecer ensino de
-              qualidade em um ambiente acolhedor, onde cada aluno é visto como
-              único e sua evolução é celebrada a cada passo.
-            </p>
-          </div>
-          <div className="aspect-[4/3] rounded-xl img-placeholder order-first md:order-last">
-            Foto histórica do estúdio
-          </div>
-        </div>
-      </SectionReveal>
-
       {/* Filosofia */}
-      <SectionReveal className="section-padding bg-bastidor">
-        <div className="container-narrow">
-          <h2 className="heading-2 text-profundidade mb-8 text-center">
-            Nossa filosofia
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                titulo: "Técnica com sensibilidade",
-                texto:
-                  "Acreditamos que a técnica é o alicerce, mas a sensibilidade é o que transforma movimento em arte. Cada aula equilibra rigor e expressão.",
-              },
-              {
-                titulo: "Respeito ao tempo de cada um",
-                texto:
-                  "Cada aluno tem seu ritmo. Nossas turmas são organizadas por nível e faixa etária para garantir que todos evoluam com segurança e prazer.",
-              },
-              {
-                titulo: "Dança como formação",
-                texto:
-                  "Mais do que passos, ensinamos disciplina, trabalho em equipe, autoconfiança e expressão emocional. A dança forma pessoas inteiras.",
-              },
-            ].map((item) => (
-              <div key={item.titulo} className="bg-palco rounded-xl p-6">
-                <h3 className="font-display text-xl font-medium text-profundidade mb-3">
-                  {item.titulo}
-                </h3>
-                <p className="text-sm text-muted leading-relaxed">
-                  {item.texto}
-                </p>
-              </div>
+      <section className="relative isolate overflow-hidden bg-tinta py-24 text-white md:py-32">
+        <Aurora preset="escuro" />
+        <div className="shell relative z-10">
+          <p className="eyebrow text-sol">Nossa filosofia</p>
+          <SplitText
+            className="display display-md mt-5 max-w-3xl"
+            linhas={["Três passos", { texto: "que guiam cada aula.", className: "serif-accent text-gradient-sol" }]}
+          />
+          <ul className="mt-14 grid gap-5 md:grid-cols-3">
+            {filosofia.map((f, i) => (
+              <Reveal as="li" key={f.titulo} delay={i * 0.1}>
+                <div className="h-full rounded-[2rem]">
+                  <div className="glass-dark h-full rounded-[2rem] p-8">
+                    <div className="flex items-center justify-between">
+                      <span className="grid size-14 place-items-center rounded-2xl" style={{ background: f.cor }}>
+                        <f.icone size={24} />
+                      </span>
+                      <span className="display text-outline text-6xl text-white/30">0{i + 1}</span>
+                    </div>
+                    <h3 className="display mt-8 text-2xl">{f.titulo}</h3>
+                    <p className="mt-3 leading-relaxed text-white/65">{f.texto}</p>
+                  </div>
+                </div>
+              </Reveal>
             ))}
-          </div>
+          </ul>
         </div>
-      </SectionReveal>
+      </section>
 
-      {/* Espaco */}
-      <SectionReveal className="section-padding">
-        <div className="container-narrow grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="aspect-[4/3] rounded-xl img-placeholder">
-            Foto da sala principal
-          </div>
-          <div>
-            <h2 className="heading-2 text-profundidade mb-4">Nosso espaço</h2>
-            <p className="text-muted leading-relaxed mb-4">
-              O estúdio conta com salas amplas e climatizadas, piso adequado
-              para dança, espelhos de parede inteira, barras fixas e móveis, e
-              sistema de som profissional.
+      {/* Espaço */}
+      <section className="section">
+        <div className="shell">
+          <div className="grid gap-8 md:grid-cols-2 md:items-end">
+            <div>
+              <p className="eyebrow text-laranja-texto">Nosso espaço</p>
+              <SplitText
+                className="display display-md mt-5 text-tinta"
+                linhas={["Feito para", { texto: "você se mover.", className: "serif-accent" }]}
+              />
+            </div>
+            <p className="text-lg leading-relaxed text-nevoa">
+              Salas amplas e climatizadas, piso adequado para dança, espelhos de parede inteira, barras fixas e
+              móveis e som profissional. Um ambiente preparado para que cada aula aconteça com segurança, conforto
+              e inspiração.
             </p>
-            <p className="text-muted leading-relaxed">
-              Um ambiente cuidadosamente preparado para que cada aula aconteça
-              com segurança, conforto e inspiração.
-            </p>
           </div>
-        </div>
-      </SectionReveal>
 
-      {/* CTA */}
-      <SectionReveal className="bg-impulso section-padding text-center text-palco">
-        <div className="max-w-lg mx-auto">
-          <h2 className="font-display text-3xl font-medium mb-4">
-            Venha nos conhecer
-          </h2>
-          <p className="text-palco/75 mb-8">
-            Agende uma visita ao nosso espaço e sinta a energia do estúdio
-          </p>
-          <CtaButton
-            href={getWhatsAppUrl(
-              "Olá! Gostaria de agendar uma visita ao Evelyn Studio de Dança."
-            )}
-            external
-          >
-            <MessageCircle size={18} />
-            Agendar visita
-          </CtaButton>
+          <ul className="mt-14 grid auto-rows-[11rem] grid-cols-2 gap-3 md:auto-rows-[14rem] md:grid-cols-4 md:gap-4">
+            {espaco.map(({ img, classe }, i) => (
+              <Reveal as="li" key={img.src} delay={i * 0.06} className={`group relative overflow-hidden rounded-[1.6rem] ${classe}`}>
+                <div className="absolute inset-0">
+                  <Foto
+                    imagem={img}
+                    sizes="(min-width: 768px) 40vw, 50vw"
+                    className="transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  />
+                </div>
+              </Reveal>
+            ))}
+          </ul>
         </div>
-      </SectionReveal>
+      </section>
+
+      <CtaFinal
+        titulo={["Venha sentir", { texto: "a energia do estúdio.", className: "serif-accent" }]}
+        texto="Agende uma visita ao nosso espaço — ou já marque sua aula experimental gratuita."
+        mensagem="Olá! Gostaria de agendar uma visita ao Evelyn Studio de Dança."
+        botao="Agendar visita"
+      />
     </PageLayout>
   );
 }

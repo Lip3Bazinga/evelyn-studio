@@ -1,19 +1,10 @@
-import type { ReactNode } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import WhatsAppButton from "./WhatsAppButton";
+import { ViewTransition, type ReactNode } from "react";
 
-interface PageLayoutProps {
-  children: ReactNode;
-}
-
-export default function PageLayout({ children }: PageLayoutProps) {
+/** Envolve o conteúdo de cada página; a troca entre páginas é um fade curto. */
+export default function PageLayout({ children }: { children: ReactNode }) {
   return (
-    <>
-      <Header />
-      <main className="flex-1 pt-16">{children}</main>
-      <Footer />
-      <WhatsAppButton />
-    </>
+    <ViewTransition enter="cortina" exit="cortina" default="none">
+      <main id="conteudo" tabIndex={-1} className="relative flex-1 outline-none">{children}</main>
+    </ViewTransition>
   );
 }

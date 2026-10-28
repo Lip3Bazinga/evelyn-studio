@@ -1,96 +1,96 @@
 import type { Metadata } from "next";
-import { MapPin, Phone, Clock, MessageCircle } from "lucide-react";
+import { ArrowUpRight, Clock, MapPin, MessageCircle, Phone } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
-import SectionReveal from "@/components/SectionReveal";
+import PageHero from "@/components/PageHero";
 import CtaButton from "@/components/CtaButton";
-import { siteConfig, getWhatsAppUrl } from "@/lib/data";
+import { Reveal } from "@/components/SectionReveal";
+import { getWhatsAppUrl, siteConfig } from "@/lib/data";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contato" },
   title: "Contato",
-  description:
-    "Entre em contato com o Evelyn Studio de Dança. Endereço, telefone e WhatsApp.",
+  description: "Entre em contato com o Evelyn Studio de Dança. Endereço, telefone e WhatsApp.",
 };
 
-const infoCards = [
-  {
-    icon: MapPin,
-    titulo: "Endereço",
-    texto: siteConfig.address,
-  },
-  {
-    icon: Phone,
-    titulo: "Telefone",
-    texto: siteConfig.phone,
-  },
-  {
-    icon: Clock,
-    titulo: "Horário de funcionamento",
-    texto: "Segunda a sexta: 8h às 21h\nSábados: 8h às 12h",
-  },
-];
+const mapaUrl = `https://www.google.com/maps?q=${encodeURIComponent(siteConfig.address.replace("—", ","))}&output=embed`;
+const rotaUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(siteConfig.address.replace("—", ","))}`;
 
 export default function ContatoPage() {
+  const cards = [
+    { icone: MapPin, cor: "var(--magenta)", titulo: "Endereço", texto: siteConfig.address, link: rotaUrl, acao: "Como chegar" },
+    {
+      icone: Phone,
+      cor: "var(--laranja)",
+      titulo: "Telefone",
+      texto: siteConfig.phone,
+      link: `tel:+55${siteConfig.phone.replace(/\D/g, "")}`,
+      acao: "Ligar agora",
+    },
+    {
+      icone: Clock,
+      cor: "var(--violeta)",
+      titulo: "Horário",
+      texto: siteConfig.horarios.map((h) => `${h.dias}: ${h.horas}`).join("\n"),
+    },
+  ];
+
   return (
     <PageLayout>
-      <section className="bg-bastidor section-padding pt-24 md:pt-32">
-        <div className="container-narrow text-center">
-          <h1 className="heading-1 text-profundidade mb-4">Contato</h1>
-          <p className="text-muted text-lg max-w-xl mx-auto">
-            Estamos prontos para receber você. Entre em contato e agende sua
-            visita.
-          </p>
+      <PageHero
+        eyebrow="Contato"
+        titulo={["Bora", { texto: "conversar?", className: "serif-accent text-gradient" }]}
+        descricao="Tire suas dúvidas, agende uma aula experimental ou venha conhecer o estúdio. A resposta mais rápida é pelo WhatsApp."
+      >
+        <CtaButton href={getWhatsAppUrl("Olá! Gostaria de informações sobre o Evelyn Studio de Dança.")} external>
+          <MessageCircle size={19} /> Falar no WhatsApp
+        </CtaButton>
+        <CtaButton href={siteConfig.instagram} external variant="glass">
+          Instagram <ArrowUpRight size={18} />
+        </CtaButton>
+      </PageHero>
+
+      <section className="pb-24">
+        <div className="shell">
+          <ul className="grid gap-4 md:grid-cols-3">
+            {cards.map((c, i) => (
+              <Reveal as="li" key={c.titulo} delay={i * 0.08}>
+                <div className="h-full rounded-[2rem]">
+                  <div className="glass flex h-full flex-col rounded-[2rem] p-7">
+                    <span className="grid size-14 place-items-center rounded-2xl text-white" style={{ background: c.cor }}>
+                      <c.icone size={24} />
+                    </span>
+                    <h2 className="display mt-6 text-2xl text-tinta">{c.titulo}</h2>
+                    <p className="mt-2 whitespace-pre-line leading-relaxed text-nevoa">{c.texto}</p>
+                    {c.link && (
+                      <a
+                        href={c.link}
+                        target={c.link.startsWith("http") ? "_blank" : undefined}
+                        rel="noopener noreferrer"
+                        className="mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-semibold text-tinta underline decoration-2 underline-offset-4"
+                        style={{ textDecorationColor: c.cor }}
+                      >
+                        {c.acao} <ArrowUpRight size={15} />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </ul>
+
+          <Reveal className="mt-6">
+            <div className="overflow-hidden rounded-[2.5rem] border border-tinta/10 bg-white/50 p-2">
+              <iframe
+                title={`Mapa — ${siteConfig.address}`}
+                src={mapaUrl}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="aspect-[4/3] w-full rounded-[2.1rem] border-0 saturate-[1.15] md:aspect-[21/9]"
+              />
+            </div>
+          </Reveal>
         </div>
       </section>
-
-      <SectionReveal className="section-padding">
-        <div className="container-narrow grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          {infoCards.map((card) => (
-            <div
-              key={card.titulo}
-              className="bg-bastidor rounded-xl p-6 text-center"
-            >
-              <div className="w-12 h-12 rounded-full bg-impulso/10 text-impulso mx-auto mb-4 flex items-center justify-center">
-                <card.icon size={22} />
-              </div>
-              <h2 className="font-display text-lg font-medium text-profundidade mb-2">
-                {card.titulo}
-              </h2>
-              <p className="text-sm text-muted whitespace-pre-line">
-                {card.texto}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Map placeholder */}
-        <div className="container-narrow">
-          <div className="aspect-[21/9] rounded-xl img-placeholder bg-veu text-muted">
-            Mapa do Google — Rua General Teles, 1900, Franca/SP
-          </div>
-        </div>
-      </SectionReveal>
-
-      {/* CTA */}
-      <SectionReveal className="bg-impulso section-padding text-center text-palco">
-        <div className="max-w-lg mx-auto">
-          <h2 className="font-display text-3xl font-medium mb-4">
-            Fale diretamente conosco
-          </h2>
-          <p className="text-palco/75 mb-8">
-            Tire suas dúvidas, agende uma aula experimental ou faça uma visita
-            ao estúdio.
-          </p>
-          <CtaButton
-            href={getWhatsAppUrl(
-              "Olá! Gostaria de informações sobre o Evelyn Studio de Dança."
-            )}
-            external
-          >
-            <MessageCircle size={18} />
-            Fale no WhatsApp
-          </CtaButton>
-        </div>
-      </SectionReveal>
     </PageLayout>
   );
 }

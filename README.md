@@ -1,31 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Evelyn Studio de Dança — site
 
-## Getting Started
+Site institucional do Evelyn Studio de Dança (Franca/SP), feito em **Next.js 16** (App Router, Cache Components), **React 19**, **Tailwind CSS 4** e **framer-motion**.
 
-First, run the development server:
+## Rodar localmente
 
 ```bash
 pnpm install
-pnpm dev
+pnpm dev        # http://localhost:3000
+pnpm build      # build de produção
+pnpm lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Publicar na Vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Suba o repositório para o GitHub e importe o projeto na Vercel (framework: Next.js, gerenciador: pnpm — detectado automaticamente).
+2. Em **Settings → Environment Variables**, crie `NEXT_PUBLIC_WHATSAPP` com o número da escola (só dígitos, com DDI e DDD, ex.: `5516999999999`).
+3. O endereço do site (sitemap, links canônicos, imagem de compartilhamento) vem automaticamente do domínio de produção da Vercel. Para forçar outro, defina `NEXT_PUBLIC_SITE_URL` (ex.: `https://www.evelynstudiodedanca.com.br`).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Onde editar o conteúdo
 
-## Learn More
+| O quê | Arquivo |
+| --- | --- |
+| Contatos, endereço, horários, redes, WhatsApp | `src/lib/data.ts` (`siteConfig`) |
+| Modalidades (texto, faixa etária, cor, foto) | `src/lib/data.ts` (`modalidades`) |
+| Equipe | `src/lib/data.ts` (`equipe`) |
+| Parceiros | `src/lib/data.ts` (`parceiros`) |
+| Espetáculos e fotos | `src/lib/images.ts` + `public/images/espetaculos/` |
+| Cenários para locação, valor e condições | `src/lib/cenarios.ts` + `public/images/cenarios/<slug>/` |
+| Catálogo de cenários em PDF | `public/catalogo-cenarios-evelyn-studio.pdf` |
+| Cores, fontes e estilos base | `src/app/globals.css` |
 
-To learn more about Next.js, take a look at the following resources:
+## Estrutura
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/app/` — páginas (uma pasta por rota), `sitemap.ts`, `robots.ts`, ícones e imagem de compartilhamento.
+- `src/components/` — componentes compartilhados; `home/`, `modalidades/` e `cenarios/` agrupam os específicos.
+- `public/images/` — fotos (as imagens são otimizadas automaticamente pelo `next/image`).

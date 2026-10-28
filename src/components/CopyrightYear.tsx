@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useSyncExternalStore } from "react";
+
+const assinar = () => () => {};
 
 export default function CopyrightYear() {
-  const [year, setYear] = useState(2024);
-
-  useEffect(() => {
-    setYear(new Date().getFullYear());
-  }, []);
-
-  return <>{year}</>;
+  const ano = useSyncExternalStore(
+    assinar,
+    () => new Date().getFullYear(),
+    () => 2026,
+  );
+  return <>{ano}</>;
 }

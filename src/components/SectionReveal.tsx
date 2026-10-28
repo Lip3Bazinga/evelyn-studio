@@ -3,26 +3,30 @@
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
-interface SectionRevealProps {
+interface RevealProps {
   children: ReactNode;
   className?: string;
   delay?: number;
+  as?: "div" | "section" | "li" | "article";
+  y?: number;
 }
 
-export default function SectionReveal({
-  children,
-  className = "",
-  delay = 0,
-}: SectionRevealProps) {
+/** Aparece com um fade curto quando entra na tela. */
+export function Reveal({ children, className = "", delay = 0, as = "div", y = 16 }: RevealProps) {
+  const Comp = motion[as];
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 30 }}
+    <Comp
+      initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      viewport={{ once: true, margin: "-8% 0px" }}
+      transition={{ duration: 0.6, delay: Math.min(delay, 0.2), ease: "easeOut" }}
       className={className}
     >
       {children}
-    </motion.section>
+    </Comp>
   );
+}
+
+export default function SectionReveal(props: Omit<RevealProps, "as">) {
+  return <Reveal as="section" {...props} />;
 }

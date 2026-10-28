@@ -1,45 +1,48 @@
 import Link from "next/link";
-import { Camera, Globe, MessageCircle } from "lucide-react";
-import { siteConfig } from "@/lib/data";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
+import { linksSecundarios, navLinks, siteConfig, getWhatsAppUrl } from "@/lib/data";
+import Aurora from "./Aurora";
 import CopyrightYear from "./CopyrightYear";
 
-const footerLinks = [
-  { href: "/escola", label: "Escola" },
-  { href: "/modalidades", label: "Modalidades" },
-  { href: "/equipe", label: "Equipe" },
-  { href: "/espetaculos", label: "Espetáculos" },
-  { href: "/contato", label: "Contato" },
+const redes = [
+  { href: siteConfig.instagram, label: "Instagram" },
+  { href: siteConfig.facebook, label: "Facebook" },
+  { href: getWhatsAppUrl(), label: "WhatsApp" },
 ];
 
 export default function Footer() {
   return (
-    <footer className="bg-profundidade text-palco/60 mt-auto">
-      <div className="container-narrow py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* Brand */}
-          <div>
-            <p className="font-display text-lg font-medium text-palco mb-3">
-              {siteConfig.shortName}
-            </p>
-            <p className="text-sm leading-relaxed">
-              {siteConfig.address}
-              <br />
-              {siteConfig.phone}
+    <footer className="relative isolate mt-auto overflow-hidden bg-tinta text-white">
+      <Aurora preset="escuro" />
+
+      <div className="shell relative z-10 pt-20 md:pt-28">
+        <div className="grid gap-12 md:grid-cols-12">
+          <div className="md:col-span-5">
+            <div className="flex items-center gap-3">
+              <span className="grid size-14 place-items-center rounded-full bg-white">
+                <Image src="/images/logo.webp" alt="" width={48} height={48} className="size-12" />
+              </span>
+              <p className="display text-3xl">
+                Evelyn <span className="serif-accent text-white/70">studio de dança</span>
+              </p>
+            </div>
+            <p className="mt-6 max-w-sm text-white/65 leading-relaxed">
+              Ballet, jazz, contemporâneo, hip hop, sapateado e ginástica rítmica em Franca/SP. Uma escola
+              onde cada aluno é visto como único.
             </p>
           </div>
 
-          {/* Nav */}
-          <div>
-            <p className="text-sm font-medium text-palco/80 mb-3">
-              Navegação
-            </p>
-            <ul className="space-y-2">
-              {footerLinks.map((link) => (
+          <div className="md:col-span-3">
+            <p className="eyebrow text-sol">Navegue</p>
+            <ul className="mt-5 grid gap-2.5">
+              {[...navLinks, ...linksSecundarios].map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm hover:text-palco transition-colors"
+                    className="group inline-flex items-center gap-2 text-white/75 transition-colors hover:text-white"
                   >
+                    <span className="h-px w-0 bg-magenta transition-all duration-300 group-hover:w-4" />
                     {link.label}
                   </Link>
                 </li>
@@ -47,47 +50,54 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Social */}
-          <div>
-            <p className="text-sm font-medium text-palco/80 mb-3">
-              Redes sociais
-            </p>
-            <div className="flex gap-3">
-              <a
-                href={siteConfig.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-palco/20 flex items-center justify-center hover:border-impulso hover:text-impulso transition-colors"
-                aria-label="Instagram"
-              >
-                <Camera size={18} />
+          <div className="md:col-span-4">
+            <p className="eyebrow text-sol">Visite</p>
+            <address className="mt-5 not-italic text-white/75 leading-relaxed">
+              {siteConfig.address}
+              <br />
+              <a href={`tel:${siteConfig.phone.replace(/\D/g, "")}`} className="hover:text-white">
+                {siteConfig.phone}
               </a>
-              <a
-                href={siteConfig.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-palco/20 flex items-center justify-center hover:border-impulso hover:text-impulso transition-colors"
-                aria-label="Facebook"
-              >
-                <Globe size={18} />
-              </a>
-              <a
-                href={`https://wa.me/${siteConfig.whatsapp}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-palco/20 flex items-center justify-center hover:border-luz hover:text-luz transition-colors"
-                aria-label="WhatsApp"
-              >
-                <MessageCircle size={18} />
-              </a>
-            </div>
+            </address>
+            <ul className="mt-4 text-sm text-white/55">
+              {siteConfig.horarios.map((h) => (
+                <li key={h.dias}>
+                  {h.dias}: {h.horas}
+                </li>
+              ))}
+            </ul>
+            <ul className="mt-7 flex flex-wrap gap-2">
+              {redes.map((r) => (
+                <li key={r.label}>
+                  <a
+                    href={r.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="glass-dark inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm transition-colors hover:bg-white hover:text-tinta"
+                  >
+                    {r.label} <ArrowUpRight size={14} />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-palco/10 text-xs text-palco/30">
-          &copy; <CopyrightYear /> {siteConfig.name}. Todos os direitos reservados.
+        <div className="mt-16 flex flex-col gap-2 border-t border-white/10 py-6 text-xs text-white/40 sm:flex-row sm:justify-between">
+          <p>
+            © <CopyrightYear /> {siteConfig.name}. Todos os direitos reservados.
+          </p>
+          <p>Feito com movimento em Franca/SP</p>
         </div>
       </div>
+
+      {/* Assinatura gigante */}
+      <p
+        aria-hidden
+        className="display text-gradient pointer-events-none relative z-0 -mb-[0.22em] select-none whitespace-nowrap text-center text-[25vw] leading-[0.8]"
+      >
+        evelyn
+      </p>
     </footer>
   );
 }

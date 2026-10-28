@@ -1,132 +1,357 @@
+/* Ordem das camadas: as classes do projeto (evelyn) perdem para os utilitários do Tailwind */
+@layer theme, base, components, evelyn, utilities;
 @import "tailwindcss";
 
-/* ── Design Tokens: Evelyn Studio ── */
+/* ═══════════════════════════════════════════════════════════
+   Evelyn Studio — "Movimento em cor"
+   Paleta vibrante ancorada no roxo da marca, com magenta,
+   laranja e sol como luzes de palco.
+   ═══════════════════════════════════════════════════════════ */
 :root {
-  /* Palette */
-  --palco: #FEFEFE;
-  --bastidor: #F5F3F8;
-  --impulso: #8B6AAE;
-  --impulso-light: #A98CC6;
-  --impulso-dark: #6B4D8A;
-  --luz: #C69C3C;
-  --luz-light: #D4B262;
-  --profundidade: #1C1929;
-  --veu: #E6E1EE;
+  /* Marca */
+  --violeta: #7a1fd6;
+  --violeta-claro: #a66bff;
+  --magenta: #ff2e93;
+  --laranja: #ff7a2f;
+  --sol: #ffc83d;
+  --menta: #19d3b5;
+  /* versões mais escuras para textos pequenos sobre fundo claro (contraste AA) */
+  --magenta-texto: #d10a6c;
+  --laranja-texto: #c2410c;
 
-  /* Semantic */
-  --background: var(--palco);
-  --foreground: var(--profundidade);
-  --muted: #7A7486;
-  --border: var(--veu);
+  /* Base */
+  --tinta: #1b0a2a; /* texto e palco escuro */
+  --tinta-2: #2a1340;
+  --creme: #fff8f2; /* fundo claro quente */
+  --lilas: #f3e8ff;
+  --nevoa: #6e5d80; /* texto secundário */
+
+  /* Gradientes assinatura */
+  --grad-palco: linear-gradient(115deg, var(--violeta) 0%, var(--magenta) 48%, var(--laranja) 100%);
+  --grad-sol: linear-gradient(115deg, var(--magenta) 0%, var(--laranja) 55%, var(--sol) 100%);
+
+  /* Vidro */
+  --glass-bg: rgba(255, 255, 255, 0.42);
+  --glass-bg-dark: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.65);
+  --glass-border-dark: rgba(255, 255, 255, 0.14);
+
+  /* Movimento */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Cor de destaque por página (modalidades sobrescrevem) */
+  --accent: var(--magenta);
 }
 
 @theme inline {
-  --color-palco: var(--palco);
-  --color-bastidor: var(--bastidor);
-  --color-impulso: var(--impulso);
-  --color-impulso-light: var(--impulso-light);
-  --color-impulso-dark: var(--impulso-dark);
-  --color-luz: var(--luz);
-  --color-luz-light: var(--luz-light);
-  --color-profundidade: var(--profundidade);
-  --color-veu: var(--veu);
-  --color-muted: var(--muted);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-border: var(--border);
-  --font-display: var(--font-cormorant), serif;
-  --font-body: var(--font-nunito), sans-serif;
+  --color-violeta: var(--violeta);
+  --color-violeta-claro: var(--violeta-claro);
+  --color-magenta: var(--magenta);
+  --color-laranja: var(--laranja);
+  --color-sol: var(--sol);
+  --color-menta: var(--menta);
+  --color-magenta-texto: var(--magenta-texto);
+  --color-laranja-texto: var(--laranja-texto);
+  --color-tinta: var(--tinta);
+  --color-tinta-2: var(--tinta-2);
+  --color-creme: var(--creme);
+  --color-lilas: var(--lilas);
+  --color-nevoa: var(--nevoa);
+  --color-accent: var(--accent);
+
+  --font-display: var(--font-bricolage), system-ui, sans-serif;
+  --font-body: var(--font-bricolage), system-ui, sans-serif;
+  --font-serif: var(--font-instrument), Georgia, serif;
+
 }
 
-/* ── Base ── */
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* ── Scroll behavior ── */
+/* ── Base ─────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
+  background: var(--creme);
+  color-scheme: light;
 }
 
-/* ── Type scale ── */
-.heading-1 {
-  font-family: var(--font-display);
-  font-size: clamp(2.25rem, 5vw, 3.75rem);
-  font-weight: 500;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
+body {
+  background: var(--creme);
+  color: var(--tinta);
+  font-family: var(--font-body);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
 }
 
-.heading-2 {
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-  font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+::selection {
+  background: var(--magenta);
+  color: white;
 }
 
-.heading-3 {
-  font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-  font-weight: 500;
-  line-height: 1.2;
-}
-
-.body-lg {
-  font-size: 1.125rem;
-  line-height: 1.7;
-}
-
-.body-sm {
-  font-size: 0.875rem;
-  line-height: 1.6;
-}
-
-/* ── Utility ── */
-.section-padding {
-  padding-inline: clamp(1rem, 5vw, 4rem);
-  padding-block: clamp(3rem, 8vw, 6rem);
-}
-
-.container-narrow {
-  max-width: 72rem;
-  margin-inline: auto;
-  padding-inline: clamp(1rem, 5vw, 4rem);
-}
-
-/* ── Image placeholders (until client provides real photos) ── */
-.img-placeholder {
-  background: var(--veu);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--impulso);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-
-/* ── Focus states ── */
 :focus-visible {
-  outline: 2px solid var(--impulso);
-  outline-offset: 2px;
+  outline: 2.5px solid var(--magenta);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
-/* ── Reduced motion ── */
+@layer evelyn {
+/* ── Tipografia ───────────────────────────────────────── */
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-stretch: 86%;
+  letter-spacing: -0.03em;
+  line-height: 0.94;
+  font-variation-settings: "opsz" 96;
+}
+
+.display-xl {
+  font-size: clamp(3.1rem, 8.4vw, 8.4rem);
+}
+.display-lg {
+  font-size: clamp(2.6rem, 6.6vw, 6.25rem);
+}
+.display-md {
+  font-size: clamp(2rem, 4.4vw, 4rem);
+}
+.display-sm {
+  font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+}
+
+/* Palavra de respiro em itálico serifado */
+.serif-accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  letter-spacing: -0.01em;
+  font-variation-settings: normal;
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.text-gradient {
+  background: var(--grad-palco);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-sol {
+  background: var(--grad-sol);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-outline {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.5px currentColor;
+}
+
+/* ── Layout ───────────────────────────────────────────── */
+.shell {
+  width: 100%;
+  max-width: 82rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4.5vw, 3rem);
+}
+
+.section {
+  padding-block: clamp(4.5rem, 11vw, 9rem);
+}
+
+/* ── Vidro ────────────────────────────────────────────── */
+.glass {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.28));
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 16px 40px -24px rgba(27, 10, 42, 0.22);
+}
+
+/* Vidro do menu: bem mais desfocado e opaco, para o texto atrás não competir */
+.header-glass {
+  background: rgba(255, 248, 242, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 12px 32px -18px rgba(27, 10, 42, 0.28);
+}
+
+.glass-dark {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--glass-border-dark);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.12) inset,
+    0 30px 60px -30px rgba(0, 0, 0, 0.6);
+}
+
+/* Borda em gradiente animado (usar com rounded-*) */
+.ring-gradient {
+  position: relative;
+  isolation: isolate;
+}
+.ring-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: linear-gradient(115deg, var(--violeta), var(--magenta), var(--laranja));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+  pointer-events: none;
+}
+
+
+
+/* ── Aurora: manchas de luz coloridas (sem filter:blur, leve) ── */
+.aurora {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.aurora > span {
+  position: absolute;
+  width: var(--s, 46vmax);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--c) 0%, transparent 72%);
+  opacity: var(--o, 0.55);
+}
+
+/* Placeholder tipográfico quando ainda não há foto */
+.placeholder-art {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--accent);
+  color: white;
+}
+.placeholder-deco::before {
+  content: attr(data-rotulo);
+  position: absolute;
+  bottom: -0.18em;
+  left: -0.04em;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-stretch: 86%;
+  letter-spacing: -0.03em;
+  font-size: clamp(4rem, 14vw, 9rem);
+  line-height: 1;
+  color: rgb(255 255 255 / 0.22);
+}
+
+}
+
+
+/* ── Keyframes ────────────────────────────────────────── */
+/* Entrada do topo das páginas: CSS puro, aparece antes do JavaScript carregar */
+.entrada {
+  animation: entrada 0.7s ease-out both;
+  animation-delay: var(--atraso, 0s);
+}
+@keyframes entrada {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+/* Link "pular para o conteúdo" (só aparece no foco do teclado) */
+.pular {
+  position: fixed;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  border-radius: 999px;
+  background: var(--tinta);
+  color: white;
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  transition: top 0.2s;
+}
+.pular:focus {
+  top: 1rem;
+}
+
+/* ── Transições de página (View Transitions do React) ──
+   Troca discreta: a página antiga some e a nova aparece num fade curto. */
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-old(.cortina) {
+  animation: 180ms ease-out both fade-sai;
+}
+::view-transition-new(.cortina) {
+  animation: 260ms ease-out 80ms both fade-entra;
+}
+
+@keyframes fade-sai {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fade-entra {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* Fotos que "viajam" entre páginas (card → capa) */
+::view-transition-group(.morph) {
+  animation-duration: 450ms;
+  animation-timing-function: var(--ease-out);
+}
+
+/* Header fica parado durante a troca */
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+/* ── Movimento reduzido ───────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-/* ── Selection ── */
-::selection {
-  background: var(--impulso);
-  color: var(--palco);
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
 }

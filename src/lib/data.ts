@@ -1,15 +1,42 @@
+import { foto, type Imagem } from "./images";
+
 export const siteConfig = {
   name: "Evelyn Studio de Dança",
   shortName: "Evelyn Studio",
   description:
     "Estúdio de dança referência em Franca, SP. Ballet, jazz, contemporâneo, hip hop, sapateado e ginástica rítmica para todas as idades.",
-  url: "https://www.evelynstudiodedanca.com.br",
-  whatsapp: "5516999999999", // placeholder — cliente fornece
+  // Endereço público do site (sitemap, links canônicos, imagem de compartilhamento).
+  // Na Vercel usa automaticamente o domínio de produção do projeto; NEXT_PUBLIC_SITE_URL sobrescreve.
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "https://www.evelynstudiodedanca.com.br"),
+  // Número do WhatsApp com DDI+DDD, só dígitos. Pode ser definido na Vercel (NEXT_PUBLIC_WHATSAPP).
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP ?? "5516999999999", // TODO: número real da cliente
   phone: "(16) 3711-4538",
   address: "Rua General Teles, 1900 — Centro, Franca/SP",
   instagram: "https://www.instagram.com/evelynstudiodedanca/",
   facebook: "https://www.facebook.com/evelynstudiodedanca/",
+  horarios: [
+    { dias: "Segunda a sexta", horas: "8h às 21h" },
+    { dias: "Sábados", horas: "8h às 12h" },
+  ],
 };
+
+export const navLinks = [
+  { href: "/escola", label: "Escola" },
+  { href: "/modalidades", label: "Modalidades" },
+  { href: "/equipe", label: "Equipe" },
+  { href: "/espetaculos", label: "Espetáculos" },
+  { href: "/contato", label: "Contato" },
+] as const;
+
+export const linksSecundarios = [
+  { href: "/locacao-de-cenarios", label: "Locação de Cenários" },
+  { href: "/infinita-danca", label: "Infinita Dança" },
+  { href: "/parceiros", label: "Parceiros" },
+] as const;
 
 export interface Modalidade {
   slug: string;
@@ -18,12 +45,15 @@ export interface Modalidade {
   descricao: string;
   faixaEtaria: string;
   beneficios: string[];
-  imagem: string; // placeholder path
+  /** Cor de destaque da modalidade — tinge cards, hero e detalhes */
+  cor: string;
+  imagem?: Imagem; // sem foto → a página mostra um espaço reservado
 }
 
 export const modalidades: Modalidade[] = [
   {
     slug: "ballet-classico",
+    cor: "#ff2e93",
     nome: "Ballet Clássico",
     tagline: "A base de toda a dança",
     descricao:
@@ -36,10 +66,14 @@ export const modalidades: Modalidade[] = [
       "Expressão artística",
       "Flexibilidade e força",
     ],
-    imagem: "/placeholder-ballet.jpg",
+    imagem: foto(
+      "modalidades/ballet-classico/01-img-2942-edited.webp",
+      "Alunas de ballet clássico com os braços em posição, em frente ao letreiro do estúdio",
+    ),
   },
   {
     slug: "jazz",
+    cor: "#ff7a2f",
     nome: "Jazz",
     tagline: "Energia e expressão em cada passo",
     descricao:
@@ -52,10 +86,14 @@ export const modalidades: Modalidade[] = [
       "Versatilidade artística",
       "Presença de palco",
     ],
-    imagem: "/placeholder-jazz.jpg",
+    imagem: foto(
+      "modalidades/jazz/01.jpg",
+      "Turma de jazz em pose coreografada junto à barra do estúdio",
+    ),
   },
   {
     slug: "contemporaneo",
+    cor: "#8a4bff",
     nome: "Contemporâneo",
     tagline: "Liberdade criativa no movimento",
     descricao:
@@ -68,10 +106,10 @@ export const modalidades: Modalidade[] = [
       "Flexibilidade artística",
       "Autoconhecimento",
     ],
-    imagem: "/placeholder-contemporaneo.jpg",
   },
   {
     slug: "hip-hop",
+    cor: "#f5b500",
     nome: "Hip Hop",
     tagline: "Ritmo e atitude",
     descricao:
@@ -84,10 +122,10 @@ export const modalidades: Modalidade[] = [
       "Trabalho em grupo",
       "Coordenação motora",
     ],
-    imagem: "/placeholder-hiphop.jpg",
   },
   {
     slug: "sapateado",
+    cor: "#ff3b4e",
     nome: "Sapateado",
     tagline: "Musicalidade nos pés",
     descricao:
@@ -100,10 +138,10 @@ export const modalidades: Modalidade[] = [
       "Memória rítmica",
       "Condicionamento físico",
     ],
-    imagem: "/placeholder-sapateado.jpg",
   },
   {
     slug: "ginastica-ritmica",
+    cor: "#14c7a9",
     nome: "Ginástica Rítmica",
     tagline: "Flexibilidade e graça",
     descricao:
@@ -116,72 +154,57 @@ export const modalidades: Modalidade[] = [
       "Equilíbrio e agilidade",
       "Disciplina esportiva",
     ],
-    imagem: "/placeholder-gr.jpg",
   },
 ];
 
 export interface MembroEquipe {
   nome: string;
   cargo: string;
-  bio: string;
-  imagem: string;
+  bio?: string;
+  imagem: Imagem;
 }
 
 export const equipe: MembroEquipe[] = [
   {
-    nome: "Evelyn",
-    cargo: "Diretora e Professora",
-    bio: "Fundadora do estúdio, Evelyn traz mais de uma década de experiência em dança e pedagogia. Sua paixão pela arte move cada aula e cada decisão do estúdio.",
-    imagem: "/placeholder-evelyn.jpg",
+    nome: "Evelyn Branquinho",
+    cargo: "Diretora e Professora de Baby Class, Ballet e Yoga",
+    bio: "Iniciou seus estudos aos 5 anos, em Franca, e aos 15 passou a lecionar. Fundou sua escola aos 24 anos com o objetivo de ajudar o desenvolvimento da criança através da dança.",
+    imagem: foto("equipe/01-whatsapp-image-2023-03-23-at-14-17-30.jpg", "Evelyn Branquinho, diretora do Evelyn Studio"),
   },
   {
-    nome: "Professora Ana",
-    cargo: "Ballet Clássico",
-    bio: "Formada em dança clássica com especialização em metodologia Vaganova. Dedica-se ao ensino do ballet desde as turmas infantis até as avançadas.",
-    imagem: "/placeholder-prof2.jpg",
+    nome: "Fabiana Durigan",
+    cargo: "Professora de Ballet",
+    imagem: foto("equipe/02-img-7190.jpg", "Fabiana Durigan, professora de ballet"),
   },
   {
-    nome: "Professora Carla",
-    cargo: "Jazz e Contemporâneo",
-    bio: "Com formação em dança contemporânea e jazz, Carla traz coreografias autorais que desafiam e inspiram os alunos a irem além.",
-    imagem: "/placeholder-prof3.jpg",
+    nome: "Juliane Ribeiro",
+    cargo: "Professora de Baby Class e Ballet",
+    imagem: foto("equipe/03-2019-01-09-11-45-48-1.jpg", "Juliane Ribeiro, professora de baby class e ballet"),
   },
   {
-    nome: "Professora Mariana",
-    cargo: "Hip Hop e Sapateado",
-    bio: "Especialista em danças urbanas e sapateado americano, Mariana conecta seus alunos com a energia e a musicalidade dessas modalidades.",
-    imagem: "/placeholder-prof4.jpg",
-  },
-];
-
-export interface Espetaculo {
-  ano: number;
-  titulo: string;
-  descricao: string;
-  imagem: string;
-}
-
-export const espetaculos: Espetaculo[] = [
-  {
-    ano: 2024,
-    titulo: "Espetáculo de Encerramento 2024",
-    descricao:
-      "Uma noite mágica que reuniu todas as turmas no palco do Teatro Municipal de Franca, celebrando um ano de dedicação e evolução.",
-    imagem: "/placeholder-show1.jpg",
+    nome: "Guilherme Avelar",
+    cargo: "Professor de Jazz e Ballet Fitness",
+    imagem: foto("equipe/04-img-0238.jpg", "Guilherme Avelar, professor de jazz e ballet fitness"),
   },
   {
-    ano: 2023,
-    titulo: "Festival de Dança 2023",
-    descricao:
-      "Participação no festival regional com apresentações de ballet clássico, jazz e contemporâneo, com destaque para as coreografias autorais.",
-    imagem: "/placeholder-show2.jpg",
+    nome: "Naiara Malaspini",
+    cargo: "Professora de Baby Class e Ballet",
+    imagem: foto("equipe/05-img-3120.jpg", "Naiara Malaspini, professora de baby class e ballet"),
   },
   {
-    ano: 2022,
-    titulo: "Mostra de Dança 2022",
-    descricao:
-      "Primeira grande mostra pós-pandemia, trazendo emoção ao público e marcando o retorno triunfal ao palco.",
-    imagem: "/placeholder-show3.jpg",
+    nome: "Letícia Castro",
+    cargo: "Professora de Ballet Adulto",
+    imagem: foto("equipe/06-06760128-d674-4f28-834d-0c97b6ebe5a2.jpg", "Letícia Castro, professora de ballet adulto"),
+  },
+  {
+    nome: "Noemia Branquinho",
+    cargo: "Financeiro",
+    imagem: foto("equipe/07-img-3138.jpg", "Noemia Branquinho, do financeiro"),
+  },
+  {
+    nome: "Neiva Branquinho",
+    cargo: "Secretaria",
+    imagem: foto("equipe/08-img-3141.jpg", "Neiva Branquinho, da secretaria"),
   },
 ];
 
@@ -197,4 +220,32 @@ export function getWhatsAppModalidade(modalidade: string): string {
   return getWhatsAppUrl(
     `Olá! Tenho interesse em agendar uma aula experimental de ${modalidade}. Poderia me dar mais informações?`
   );
+}
+
+export const parceiros = [
+  { nome: "Sensus Vitae — Instituto de Terapia Ocupacional", arquivo: "01-captura-de-tela-2022-04-15-as-13-23-10.webp" },
+  { nome: "Juliane Andrade Estética", arquivo: "02-logo-juliane-andrade-edited.webp" },
+  { nome: "Pão Nosso Cafés Especiais", arquivo: "03-logo-pao-nosso-cafes-especiais-degrade-2.webp" },
+  { nome: "Tutto Acessórios", arquivo: "04-1676985843505-tutto-acessorios-prancheta-1-copia.webp" },
+  { nome: "Ballet & Cia Store", arquivo: "05-image-6487327.jpg" },
+  { nome: "Tip Top", arquivo: "06-logo-tip-top-horizontal.webp" },
+  { nome: "Dunz", arquivo: "07-14792487-d329-4f2d-b04e-c9b361530161.jpg" },
+  { nome: "Bamblas Maquiagem e Acessórios", arquivo: "08-bamblas.jpg" },
+  { nome: "CCBEU American Space", arquivo: "09-logo-ccbeu.jpg" },
+  { nome: "Brownie Lab", arquivo: "10-alinhado-fundo-transparente.webp" },
+].map((p) => ({ nome: p.nome, logo: foto(`parceiros/${p.arquivo}`, `Logo ${p.nome}`) }));
+
+/** Texto escuro ou claro sobre uma cor de destaque: escolhe o de maior contraste (WCAG). */
+export function textoSobre(cor: string): string {
+  const lum = (hex: string) => {
+    const h = hex.replace("#", "");
+    const [r, g, b] = [0, 2, 4].map((i) => {
+      const c = parseInt(h.slice(i, i + 2), 16) / 255;
+      return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const contraste = (a: number, b: number) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+  const l = lum(cor);
+  return contraste(l, 1) >= contraste(l, lum("#1b0a2a")) ? "#ffffff" : "var(--tinta)";
 }
