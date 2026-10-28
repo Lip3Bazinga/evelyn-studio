@@ -45,7 +45,7 @@ export default function EquipePage() {
                   style={{ background: "radial-gradient(closest-side, var(--violeta), transparent)" }}
                 />
                 <p className="eyebrow text-sol">Fundadora e diretora</p>
-                <h2 className="display display-md mt-4">
+                <h2 className="display display-md mt-4 tracking-[0.01em]">
                   {diretora.nome.split(" ")[0]}{" "}
                   <span className="serif-accent text-gradient-sol">{diretora.nome.split(" ").slice(1).join(" ")}</span>
                 </h2>
@@ -71,7 +71,7 @@ export default function EquipePage() {
                     className="object-cover object-[50%_20%] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   />
                 </div>
-                <p className="display mt-3 px-1 text-lg leading-tight text-tinta md:text-xl">{m.nome}</p>
+                <p className="display mt-3 px-1 text-lg leading-tight tracking-[0.03em] text-tinta md:text-xl">{m.nome}</p>
                 <p className="mt-1 px-1 text-sm leading-snug text-nevoa">{m.cargo}</p>
               </div>
             </Reveal>

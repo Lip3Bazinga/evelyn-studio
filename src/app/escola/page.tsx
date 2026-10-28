@@ -81,12 +81,13 @@ export default function EscolaPage() {
       {/* História */}
       <section className="section">
         <div className="shell grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <p className="eyebrow text-magenta-texto">Nossa história</p>
-            <Reveal className="mt-8 hidden lg:block">
-              <div className="glass rounded-[2rem] p-7">
-                <Award className="text-violeta" size={28} />
-                <p className="mt-4 text-nevoa leading-relaxed">
+          {/* Coluna esquerda: título na largura exata do card e card esticado até o fim do texto ao lado */}
+          <div className="flex flex-col lg:col-span-4 [container-type:inline-size]">
+            <p className="eyebrow titulo-ajustado text-magenta-texto">Nossa história</p>
+            <Reveal className="mt-6 hidden flex-1 lg:flex xl:mt-8">
+              <div className="glass flex w-full flex-col items-center justify-center rounded-[2rem] p-6 text-center xl:p-8">
+                <Award className="text-violeta" size={36} />
+                <p className="mt-4 max-w-[18rem] leading-relaxed text-nevoa xl:mt-5 xl:text-lg">
                   Evelyn realizou os exames da Royal Academy of Dance entre 1994 e 1998, concluindo o Grade 8 com
                   nota máxima.
                 </p>

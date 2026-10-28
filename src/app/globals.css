@@ -279,6 +279,20 @@ body {
   }
 }
 
+/* Título que ocupa exatamente a largura da coluna (ex.: "Nossa história" na Escola).
+   9,77cqi = largura do texto em caixa alta com espaçamento .22em → 100% da coluna. */
+@media (min-width: 1024px) {
+  .titulo-ajustado {
+    font-size: 9.77cqi;
+    /* tamanho óptico fixo: a largura das letras não varia com o tamanho da fonte */
+    font-optical-sizing: none;
+    font-variation-settings: "opsz" 96;
+    line-height: 1;
+    white-space: nowrap;
+    margin-right: -0.22em;
+  }
+}
+
 /* Link "pular para o conteúdo" (só aparece no foco do teclado) */
 .pular {
   position: fixed;

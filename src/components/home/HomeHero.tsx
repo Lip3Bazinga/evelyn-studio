@@ -23,15 +23,10 @@ export default function HomeHero() {
 
       <div className="shell relative z-10 grid items-center gap-14 lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <p className="glass eyebrow inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-tinta/80">
-            <span className="size-2 rounded-full bg-magenta" />
-            Estúdio de dança · Franca/SP
-          </p>
-
           <SplitText
             as="h1"
             noCarregamento
-            className="display display-xl mt-7 text-tinta"
+            className="display display-xl text-tinta"
             linhas={[
               "Onde cada",
               { texto: "movimento", className: "text-gradient pr-[0.06em]" },

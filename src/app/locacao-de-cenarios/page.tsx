@@ -88,8 +88,9 @@ export default function LocacaoDeCenariosPage() {
         />
 
         <div className="shell">
-          <p className="glass-dark eyebrow inline-flex items-center gap-2 rounded-full px-4 py-2 text-white/85">
-            <span className="size-2 rounded-full bg-sol" /> Serviço exclusivo · Locação de cenários
+          <p className="glass-dark eyebrow inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-white/85">
+            <span aria-hidden className="h-3.5 w-0.5 rounded-full bg-sol" />
+            Serviço exclusivo · Locação de cenários
           </p>
           <SplitText
             as="h1"

@@ -58,8 +58,8 @@ export default async function ModalidadePage({ params }: PageProps<"/modalidades
               >
                 <ArrowLeft size={16} /> Todas as modalidades
               </Link>
-              <p className="eyebrow mt-8 flex items-center gap-2 text-tinta/75">
-                <span className="size-2.5 rounded-full" style={{ background: mod.cor }} />
+              <p className="eyebrow mt-8 flex items-center gap-2.5 text-tinta/75">
+                <span aria-hidden className="h-3.5 w-0.5 rounded-full" style={{ background: mod.cor }} />
                 {String(indice + 1).padStart(2, "0")} · {mod.faixaEtaria}
               </p>
               <SplitText as="h1" noCarregamento className="display display-lg mt-4 text-tinta" linhas={mod.nome.split(" ").length > 1 ? [mod.nome.split(" ")[0], { texto: mod.nome.split(" ").slice(1).join(" "), className: "serif-accent" }] : [mod.nome]} />

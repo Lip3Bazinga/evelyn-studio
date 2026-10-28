@@ -41,7 +41,7 @@ export default function EquipePreview() {
                     className="object-cover object-[50%_20%] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   />
                 </div>
-                <p className="display mt-3 px-1 text-lg leading-tight text-tinta md:text-xl">{p.nome}</p>
+                <p className="display mt-3 px-1 text-lg leading-tight tracking-[0.03em] text-tinta md:text-xl">{p.nome}</p>
                 <p className="mt-1 px-1 text-sm leading-snug text-nevoa">{p.cargo}</p>
               </div>
             </Reveal>

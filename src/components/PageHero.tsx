@@ -33,8 +33,8 @@ export default function PageHero({ eyebrow, titulo, descricao, children, lateral
       <div className={`shell relative z-10 ${lateral ? "grid items-center gap-12 lg:grid-cols-[1.15fr_1fr]" : ""}`}>
         <div>
           <Entrada y={16}>
-            <p className="glass eyebrow inline-flex items-center gap-2 rounded-full px-4 py-2 text-tinta/80">
-              <span className="size-2 rounded-full" style={{ background: cor ?? "var(--magenta)" }} />
+            <p className="glass eyebrow inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-tinta/80">
+              <span aria-hidden className="h-3.5 w-0.5 rounded-full" style={{ background: cor ?? "var(--magenta)" }} />
               {eyebrow}
             </p>
           </Entrada>
