@@ -6,25 +6,22 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { siteConfig } from "@/lib/data";
 import "./globals.css";
 
-// Bricolage Grotesque variável (peso, largura e tamanho óptico) — a voz do site
-const bricolage = localFont({
+// Fraunces variável (peso, tamanho óptico e "suavidade") — títulos delicados, com itálico
+const fraunces = localFont({
   src: [
-    { path: "../fonts/bricolage-grotesque-latin-standard-normal.woff2", style: "normal" },
-    { path: "../fonts/bricolage-grotesque-latin-ext-standard-normal.woff2", style: "normal" },
+    { path: "../fonts/fraunces-latin-full-normal.woff2", style: "normal" },
+    { path: "../fonts/fraunces-latin-full-italic.woff2", style: "italic" },
   ],
-  weight: "200 800",
-  variable: "--font-bricolage",
+  weight: "100 900",
+  variable: "--font-fraunces",
   display: "swap",
-  declarations: [{ prop: "font-stretch", value: "75% 100%" }],
 });
 
-// Instrument Serif itálico — o "suspiro" poético nos títulos
-const instrument = localFont({
-  src: [
-    { path: "../fonts/instrument-serif-latin-400-italic.woff2", weight: "400", style: "italic" },
-    { path: "../fonts/instrument-serif-latin-400-normal.woff2", weight: "400", style: "normal" },
-  ],
-  variable: "--font-instrument",
+// Manrope variável — texto corrido, leve e legível
+const manrope = localFont({
+  src: [{ path: "../fonts/manrope-latin-wght-normal.woff2", style: "normal" }],
+  weight: "200 800",
+  variable: "--font-manrope",
   display: "swap",
 });
 
@@ -64,7 +61,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={`${bricolage.variable} ${instrument.variable}`}>
+    <html lang="pt-BR" className={`${fraunces.variable} ${manrope.variable}`}>
       <body className="min-h-dvh flex flex-col">
         <a href="#conteudo" className="pular">
           Pular para o conteúdo

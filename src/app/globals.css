@@ -60,9 +60,9 @@
   --color-nevoa: var(--nevoa);
   --color-accent: var(--accent);
 
-  --font-display: var(--font-bricolage), system-ui, sans-serif;
-  --font-body: var(--font-bricolage), system-ui, sans-serif;
-  --font-serif: var(--font-instrument), Georgia, serif;
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-body: var(--font-manrope), system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), Georgia, serif;
 
 }
 
@@ -98,11 +98,11 @@ body {
 /* ── Tipografia ───────────────────────────────────────── */
 .display {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-stretch: 86%;
-  letter-spacing: -0.03em;
-  line-height: 0.94;
-  font-variation-settings: "opsz" 96;
+  font-weight: 340;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  /* SOFT arredonda as serifas; o tamanho óptico acompanha o tamanho da fonte */
+  font-variation-settings: "SOFT" 100;
 }
 
 .display-xl {
@@ -122,10 +122,9 @@ body {
 .serif-accent {
   font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 400;
-  font-stretch: 100%;
+  font-weight: 300;
   letter-spacing: -0.01em;
-  font-variation-settings: normal;
+  font-variation-settings: "SOFT" 100;
 }
 
 .eyebrow {
@@ -255,9 +254,8 @@ body {
   left: -0.04em;
   white-space: nowrap;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-stretch: 86%;
-  letter-spacing: -0.03em;
+  font-weight: 300;
+  letter-spacing: -0.02em;
   font-size: clamp(4rem, 14vw, 9rem);
   line-height: 1;
   color: rgb(255 255 255 / 0.22);
@@ -280,13 +278,10 @@ body {
 }
 
 /* Título que ocupa exatamente a largura da coluna (ex.: "Nossa história" na Escola).
-   9,77cqi = largura do texto em caixa alta com espaçamento .22em → 100% da coluna. */
+   9,03cqi = largura do texto (Manrope, caixa alta, espaçamento .22em) → 100% da coluna. */
 @media (min-width: 1024px) {
   .titulo-ajustado {
-    font-size: 9.77cqi;
-    /* tamanho óptico fixo: a largura das letras não varia com o tamanho da fonte */
-    font-optical-sizing: none;
-    font-variation-settings: "opsz" 96;
+    font-size: 9.03cqi;
     line-height: 1;
     white-space: nowrap;
     margin-right: -0.22em;
